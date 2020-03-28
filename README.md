@@ -1,2 +1,2 @@
 # tads
-Tópicos Avançados em Desenvolvimento de Software
+Tópicos Avançados em Desenvolvimento de Software.
