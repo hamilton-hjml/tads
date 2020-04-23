@@ -5,20 +5,6 @@ body {
 	font-family: Times New Roman;
 }
 
-/*Estilização pagina email*/
-fieldset {
-	padding: 10px;
-	margin-top: 10px;
-	border: 1px solid green;
-	border-radius: 8px;
-}
-
-legend {
-	color:green;
-	padding: 6px;
-	margin-left: 20px;
-	width: auto;
-}
 /*Tela Login*/
 #telaLogin{
 	
@@ -116,6 +102,7 @@ h1{
 	text-shadow: 1px 1px 1px #333;
 	margin: 50px 0 50px 0;
 }
+
 h5{
 	text-align: center;
 	text-shadow: 1px 1px 1px #333;
@@ -142,29 +129,6 @@ h5{
 	color: #32CD32;
 }
 
-.endereco{
-	text-align:center;
-}
-
-.txtContatos{
-	font-size:20px; 
-	font-family:Zapf-Chancery; 
-	text-align:center; 
-	text-shadow: 1px 1px 1px #333;"
-}
-
-.txtContatos2{
-	font-size:20px; 
-	font-family:Zapf-Chancery; 
-	text-align:center; 
-}
-
-/*Estilização mensagem de agradecimento*/
-
-.agradecer{
-	text-align:center;
-	color: #32CD32;
-}
 
 #turma{
     padding: 20px; 
@@ -183,15 +147,4 @@ h5{
 	bottom: 0;
 	width: 100%;
 	
-}
-
-/*Estilização tabela com perguntas do questionário*/
-
-table {
-	text-align:center;
-	width: 60% !important; /*Importante manter o !important*/
-    margin: auto;
-	border-collapse: separate; 
-	border-spacing: 10px;
-	margin: 0 0 0 0;
 }
