@@ -7,7 +7,9 @@ Route::get('/', function () {
 Auth::routes();
 
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/mobile/home', 'mobile\HomeController@index')->name('mobile/home');
 
 Route::Resources([
 	"professor"=>"ProfessorController",
