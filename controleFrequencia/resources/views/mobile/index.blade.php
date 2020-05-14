@@ -46,7 +46,7 @@
 			</div>
 		</footer>
 	
-        <script type="text/javascript" src="mobileapp/js/index.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>
 
