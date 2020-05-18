@@ -66,6 +66,7 @@ class ProfessorController extends Controller
 	$user->password = Hash::make($senha);
 	$user->email = $professor->email;
 	$user->name = $professor->email;
+	$user->role = 'professor'; //<- seta o cargo de professor
 	$user->save();
 
 	$professor->id = $user->id;
