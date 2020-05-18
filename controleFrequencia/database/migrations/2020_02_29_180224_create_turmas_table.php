@@ -14,7 +14,7 @@ class CreateTurmasTable extends Migration
 			$table->string("nome", 100);
 			$table->string("semestre", 100);
 			$table->string("ano", 100);
-			$table->integer("professor")->unsigned();
+			$table->bigInteger("professor")->unsigned();
 			$table->foreign("professor")->references("id")->on("professor");
             $table->timestamps();
         });
