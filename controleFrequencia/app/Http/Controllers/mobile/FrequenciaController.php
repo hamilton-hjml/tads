@@ -52,20 +52,6 @@ class FrequenciaController extends Controller
     
     public function store(Request $request)
     {
-		//dd($request);
-		/*
-        $request->validate([
-			"nome" => "required",
-			"matricula" => "required",
-			"turma" => "required",
-			
-		], [
-			"nome.required" => "Nome obrigatório", 
-			"matricula.required" => "Matricula obrigatório",
-			"turma.required" => "Turma obrigatório"
-			
-		]);
-		*/
 		
 		$data = $request->get("data");
 		$turma = $request->get("turma");
@@ -91,21 +77,6 @@ class FrequenciaController extends Controller
 			$statusAluno->save();
 		}
 		
-		/*
-		
-		if ($request->get("id") != 0){
-			$aluno = Aluno::Find($request->get("id"));
-		}else{
-		$aluno = new Aluno();
-		}
-		$aluno->nome = $request->get("nome");
-		$aluno->matricula = $request->get("matricula");
-		$aluno->turma = $request->get("turma");
-		
-		$aluno->save();
-		$request->session()->flash("status", "Salvo com sucesso!");
-		
-		*/
 		return redirect("/mobile/frequencia");
     }
 }
