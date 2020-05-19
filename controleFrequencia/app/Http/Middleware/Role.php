@@ -22,6 +22,11 @@ class Role
     public function handle($request, Closure $next, $role)
     {
 		//don't have role, redirect to login page
+		if (!$request->user())
+		{
+			return redirect('home');
+		}
+		
         if (!$request->user()->hasRole($role)) {
             // Redirect...
             if ($request->user()->role == 'professor')

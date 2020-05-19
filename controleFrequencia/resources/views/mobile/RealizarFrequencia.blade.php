@@ -13,6 +13,19 @@
 		<script src="js/bootstrap.js"></script>
 		<script src="js/script.js"></script>
 		<script src="js/Menu/javascript.js"></script>
+		
+		<script>
+			window.addEventListener('load', function()
+			{
+			var select = document.getElementById('turma_select');
+			
+				select.addEventListener('change', function()
+				{
+				window.location = '/mobile/frequencia?turma=' + this.value;
+				}, false);
+			
+			}, false);
+		</script>
 	</head>
 	
 	<body>
@@ -31,14 +44,46 @@
 		
 		<br>
 		
-		<div id="turma">
-			<p><font size="2">Turma:</font></p>
-				<select name="turma">
-					<option value="bd">Banco de dados</option>
-					<option value="etd">Estrutura de dados</option>
-				</select>
-		</div>
-		
+		<form method="POST" action="/mobile/frequencia">
+			@csrf
+			
+			
+			<div id="turma">
+				<p><font size="2">Turma:</font></p>
+					<select name="turma" id="turma_select">
+						@foreach ($turmas as $turma)
+							@if ($turma->id == $idTurma)
+								<option value="{{ $turma->id }}" selected="selected">{{ $turma->nome }}</option>
+							@else
+								<option value="{{ $turma->id }}">{{ $turma->nome }}</option>
+							@endif			
+						@endforeach
+					</select>
+			</div>
+			
+			<div id="data">
+				<p><font size="2">Data:</font></p>
+					
+				<p></p><input type="date" id="data" name="data" value={{$data}} ></p>
+			</div>
+			
+
+				@foreach ($alunos as $aluno)
+				<p>{{ $aluno->nome }}
+							<select name="aluno[{{$aluno->id}}]">							
+								<option value="1">Presente</option>
+								<option value="2">Ausente</option>
+								<option value="3">Atestado</option>
+							</select>
+				</p>
+				@endforeach
+				
+			<button class="btn btn-success botoes" type="submit">
+				<i class="fa fa-save"></i>
+				Salvar
+			</button>
+
+		</form>
 	
 		<footer>
 			<div class="rodape">
