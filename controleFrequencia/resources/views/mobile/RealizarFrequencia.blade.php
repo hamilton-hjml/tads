@@ -70,10 +70,10 @@
 
 				@foreach ($alunos as $aluno)
 				<p>{{ $aluno->nome }}
-							<select name="aluno[{{$aluno->id}}]">							
-								<option value="1">Presente</option>
-								<option value="2">Ausente</option>
-								<option value="3">Atestado</option>
+							<select name="alunos[{{$aluno->id}}]">							
+								<option value="Presente">Presente</option>
+								<option value="Ausente">Ausente</option>
+								<option value="Atestado">Atestado</option>
 							</select>
 				</p>
 				@endforeach

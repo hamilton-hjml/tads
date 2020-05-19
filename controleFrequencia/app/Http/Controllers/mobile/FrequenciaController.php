@@ -5,6 +5,8 @@ namespace App\Http\Controllers\mobile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Turma;
+use App\Chamada;
+use App\StatusAluno;
 
 use Illuminate\Support\Facades\DB;
 
@@ -50,7 +52,7 @@ class FrequenciaController extends Controller
     
     public function store(Request $request)
     {
-		dd($request);
+		//dd($request);
 		/*
         $request->validate([
 			"nome" => "required",
@@ -66,8 +68,28 @@ class FrequenciaController extends Controller
 		*/
 		
 		$data = $request->get("data");
-		$idTurma = $request->get("idTurma");
-		$data = $request->get("data");
+		$turma = $request->get("turma");
+		$alunos = $request->get("alunos");
+		
+		
+		//primeiro, salvar a chamda...
+		$chamada = new Chamada();
+		
+		$chamada->idTurma = $turma;
+		$chamada->data = $data;
+		$chamada->save();
+		$idChamada = $chamada->id;
+		
+		//depois, pega cada aluno que faz parte da chamada e armazena seu status com id do aluno e id da chamada
+		foreach ($alunos as $idAluno => $status) 
+		{
+			$statusAluno = new StatusAluno();
+			
+			$statusAluno->idChamada = $idChamada;
+			$statusAluno->idAluno = $idAluno;
+			$statusAluno->statusAluno = $status;
+			$statusAluno->save();
+		}
 		
 		/*
 		
