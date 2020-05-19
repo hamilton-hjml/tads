@@ -28,7 +28,7 @@ Route::group(['middleware' => 'role:admin'], function() {
     });
     
 Route::group(['middleware' => 'role:professor'], function() {
-        Route::resource('frequencia', 'FrequenciaController');
+        Route::get('mobile/frequencia', 'mobile\FrequenciaController@index');
     });
 
 Route::Get("/professor/{id}/delete", [
