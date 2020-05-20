@@ -10,9 +10,9 @@ class CreateProfessorsTable extends Migration
     public function up()
     {
         Schema::create('professor', function (Blueprint $table) {
-            //$table->increments('id');
+            $table->bigIncrements('id');
             
-            $table->bigInteger("id")->unsigned();
+            //$table->bigInteger("id")->unsigned();
 			$table->foreign("id")->references("id")->on("users");
             
 			$table->string("nome", 100);
