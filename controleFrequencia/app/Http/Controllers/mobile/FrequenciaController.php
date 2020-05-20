@@ -23,6 +23,7 @@ class FrequenciaController extends Controller
 	
     public function index(Request $request)
     {
+		date_default_timezone_set('UTC');
 		$idTurma = 0;
 		if($request->turma)
 		{
@@ -39,8 +40,35 @@ class FrequenciaController extends Controller
         
         $alunos = $this->listaTurmaAlunos($idTurma);
 
-        $data = now(); //TODO: AJUSTAR DE ACORDO COM ID
-        //TODO: SE DATA ATUAL JÁ TEM UM RECORD, FAZER O HANDLING DESSE ERRO
+        $data = now();
+        if($request->data)
+        {
+			$data = $request->data;
+		}
+        
+        //checando se a turma atual já tem uma chamada realizada na data selecionada
+        //TODO: ENVIAR A DATA DO FORMULÁRIO
+        $chamadaExiste = DB::table("chamada")
+        ->where("chamada.idTurma", "=", $idTurma)
+        ->whereDate('data',$data)
+        ->get();
+        
+        //dd("fwut",$idTurma, $data, $chamadaExiste);
+        //dd($chamadaExiste);
+        if(count($chamadaExiste) == 1)
+        {
+			//caso a chamada exista, obtenha o statusAluno de todos os alunos da chamada atual, juntamente com a tabela aluno
+			$alunos = DB::table("status_aluno")
+			->where("status_aluno.idChamada", "=", $chamadaExiste[0]->idChamada)
+			->join("aluno", "aluno.id", "=", "status_aluno.idAluno")
+			->get();
+			//dd($alunos);
+		}
+		else if(count($chamadaExiste) > 1)
+		{
+			die("erro! mais de 1 chamada por data!");
+		}
+        
         
 		return view("mobile/RealizarFrequencia",[
 			"idTurma" => $idTurma,
@@ -52,7 +80,7 @@ class FrequenciaController extends Controller
     
     public function store(Request $request)
     {
-		
+		date_default_timezone_set('UTC');
 		$data = $request->get("data");
 		$turma = $request->get("turma");
 		$alunos = $request->get("alunos");

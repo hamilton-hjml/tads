@@ -67,10 +67,31 @@
 				<p></p><input type="date" id="data" name="data" value={{$data}} ></p>
 			</div>
 			
-
+				
+				
 				@foreach ($alunos as $aluno)
 				<p>{{ $aluno->nome }}
-							<select name="alunos[{{$aluno->id}}]">							
+							<select name="alunos[{{$aluno->id}}]">		
+								@if (!empty($aluno->statusAluno))
+									@if ($aluno->statusAluno == "Presente")
+										<option value="Presente" selected="selected">Presente</option>
+									@else
+										<option value="Presente">Presente</option>
+									@endif	
+										
+									@if ($aluno->statusAluno == "Ausente")
+										<option value="Ausente" selected="selected">Ausente</option>
+									@else
+										<option value="Ausente">Ausente</option>
+									@endif
+									
+									@if ($aluno->statusAluno == "Atestado")
+										<option value="Atestado" selected="selected">Atestado</option>
+									@else
+										<option value="Atestado">Atestado</option>
+									@endif
+								@endif
+										
 								<option value="Presente">Presente</option>
 								<option value="Ausente">Ausente</option>
 								<option value="Atestado">Atestado</option>
