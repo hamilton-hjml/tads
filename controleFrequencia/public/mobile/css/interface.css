@@ -130,8 +130,8 @@ h5{
 }
 
 
-#turma{
-    padding: 20px; 
+#turma,#data,#alunos{
+    padding-left: 20px; 
 
 }
 

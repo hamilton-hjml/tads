@@ -18,7 +18,7 @@
 	<body>
 		<!-- Navegação -->
         <div class="topnav" id="myTopnav">
-			<a href="MenuPrincipal.html">Menu Principal</a>
+			<a href="MenuPrincipal">Menu Principal</a>
 			<a href="#" class="active">Frequência</a>
 			<a href="privacidade.html">Privacidade</a>
 

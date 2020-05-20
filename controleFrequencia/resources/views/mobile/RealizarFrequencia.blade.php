@@ -68,7 +68,7 @@
 			</div>
 			
 				
-				
+			<div id = "alunos">
 				@foreach ($alunos as $aluno)
 				<p>{{ $aluno->nome }}
 							<select name="alunos[{{$aluno->id}}]">		
@@ -98,12 +98,13 @@
 							</select>
 				</p>
 				@endforeach
+			
 				
 			<button class="btn btn-success botoes" type="submit">
 				<i class="fa fa-save"></i>
 				Salvar
 			</button>
-
+			</div>
 		</form>
 	
 		<footer>

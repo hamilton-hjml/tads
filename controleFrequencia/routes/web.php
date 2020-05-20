@@ -9,7 +9,10 @@ Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/mobile/home', 'mobile\HomeController@index')->name('mobile/home');
+//Route::get('/mobile/home', 'mobile\HomeController@index')->name('mobile/home');
+Route::get('/mobile/login', 'mobile\MobileLoginController@index')->name('mobile/login');
+Route::get('/mobile/MenuPrincipal', 'mobile\MenuPrincipalController@index')->name('mobile/MenuPrincipal');
+
 
 /*
 Route::Resources([
