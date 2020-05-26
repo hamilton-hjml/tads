@@ -18,11 +18,12 @@
 			window.addEventListener('load', function()
 			{
 			var select = document.getElementById('turma_select');
-			
-				select.addEventListener('change', function()
-				{
-				window.location = '/mobile/frequencia?turma=' + this.value;
-				}, false);
+			var data = document.getElementById('data');
+			var func = function(){
+									window.location = '/mobile/frequencia?turma=' + select.value + "&data=" + data.value;
+								}
+			select.addEventListener('change', func, false);
+			data.addEventListener('change', func, false);
 			
 			}, false);
 		</script>
@@ -61,7 +62,7 @@
 					</select>
 			</div>
 			
-			<div id="data">
+			<div id="div_data">
 				<p><font size="2">Data:</font></p>
 					
 				<p></p><input type="date" id="data" name="data" value={{$data}} ></p>
@@ -90,11 +91,11 @@
 									@else
 										<option value="Atestado">Atestado</option>
 									@endif
-								@endif
-										
+								@else										
 								<option value="Presente">Presente</option>
 								<option value="Ausente">Ausente</option>
 								<option value="Atestado">Atestado</option>
+								@endif
 							</select>
 				</p>
 				@endforeach

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Turma;
 use App\Chamada;
 use App\StatusAluno;
+use App\Aluno;
 
 use Illuminate\Support\Facades\DB;
 
@@ -30,6 +31,7 @@ class FrequenciaController extends Controller
 			$idTurma = $request->turma;
 		}
         $turmas = Turma::All();
+        
         if($turmas->count() > 0)
         {
 			if($idTurma == 0)
@@ -47,7 +49,7 @@ class FrequenciaController extends Controller
 		}
         
         //checando se a turma atual já tem uma chamada realizada na data selecionada
-        //TODO: ENVIAR A DATA DO FORMULÁRIO
+        //TODO: ENVIAR A DATA DO FORMULÁRIO QUANDO SALVAR
         $chamadaExiste = DB::table("chamada")
         ->where("chamada.idTurma", "=", $idTurma)
         ->whereDate('data',$data)
@@ -63,6 +65,7 @@ class FrequenciaController extends Controller
 			->join("aluno", "aluno.id", "=", "status_aluno.idAluno")
 			->get();
 			//dd($alunos);
+			//dd($data);
 		}
 		else if(count($chamadaExiste) > 1)
 		{
@@ -87,24 +90,67 @@ class FrequenciaController extends Controller
 		
 		
 		//primeiro, salvar a chamda...
-		$chamada = new Chamada();
+		//somente se a chamada não existe
 		
-		$chamada->idTurma = $turma;
-		$chamada->data = $data;
-		$chamada->save();
-		$idChamada = $chamada->id;
+		//checando se a turma atual já tem uma chamada realizada na data selecionada
+        $chamadaExiste = DB::table("chamada")
+        ->where("chamada.idTurma", "=", $turma)
+        ->whereDate('data',$data)
+        ->get();
+        
+        //dd("fwut",$idTurma, $data, $chamadaExiste);
+        //dd($chamadaExiste);
+        $chamada = false;
+        
+        if(count($chamadaExiste) == 1)
+        {
+			$chamada = $chamadaExiste[0];
+			
+		}
+		else
+		{
+			$chamada = new Chamada();
+		
+			$chamada->idTurma = $turma;
+			$chamada->data = $data;
+			$chamada->save();
+			//dd($chamada);
+		}
+		$idChamada = $chamada->idChamada;
 		
 		//depois, pega cada aluno que faz parte da chamada e armazena seu status com id do aluno e id da chamada
-		foreach ($alunos as $idAluno => $status) 
+		
+		foreach ($alunos as $idAluno => $status)
 		{
-			$statusAluno = new StatusAluno();
+			//se a chamada existe, apenas update
+			if(count($chamadaExiste) == 1)
+			{
+				//$statusAluno = DB::table("status_aluno")
+				//->where("status_aluno.idChamada", "=", $idChamada)
+				//->where("status_aluno.idAluno",$idAluno)
+				//->get()[0];
+				//$statusAluno->statusAluno = $status;
+				
+				//$statusAluno.update();
+				DB::table('status_aluno')
+				->where("status_aluno.idChamada", "=", $idChamada)
+				->where("status_aluno.idAluno",$idAluno)
+				->update(['statusAluno' => $status]);
+			}
+			else
+			{
+				$statusAluno = new StatusAluno();
+				//dd($statusAluno);
+				$statusAluno->idChamada = $idChamada;
+				$statusAluno->idAluno = $idAluno;
+				$statusAluno->statusAluno = $status;
+				$statusAluno->save();
+			}
+
 			
-			$statusAluno->idChamada = $idChamada;
-			$statusAluno->idAluno = $idAluno;
-			$statusAluno->statusAluno = $status;
-			$statusAluno->save();
 		}
 		
-		return redirect("/mobile/frequencia");
+		//return redirect("/mobile/frequencia");
+		return redirect()->route('frequencia.index',["idTurma" => $turma, "data" => $data]);
     }
 }
