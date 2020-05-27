@@ -49,7 +49,7 @@ class FrequenciaController extends Controller
 		}
         
         //checando se a turma atual já tem uma chamada realizada na data selecionada
-        //TODO: ENVIAR A DATA DO FORMULÁRIO QUANDO SALVAR
+        //TODO: ENVIAR O ID DA TURMA E ALTERAR NO VIEW(DEPOIS DO STORE)
         $chamadaExiste = DB::table("chamada")
         ->where("chamada.idTurma", "=", $idTurma)
         ->whereDate('data',$data)
@@ -57,6 +57,7 @@ class FrequenciaController extends Controller
         
         //dd("fwut",$idTurma, $data, $chamadaExiste);
         //dd($chamadaExiste);
+        $existe = false;
         if(count($chamadaExiste) == 1)
         {
 			//caso a chamada exista, obtenha o statusAluno de todos os alunos da chamada atual, juntamente com a tabela aluno
@@ -64,20 +65,21 @@ class FrequenciaController extends Controller
 			->where("status_aluno.idChamada", "=", $chamadaExiste[0]->idChamada)
 			->join("aluno", "aluno.id", "=", "status_aluno.idAluno")
 			->get();
-			//dd($alunos);
-			//dd($data);
+			
+			$existe = true;
 		}
 		else if(count($chamadaExiste) > 1)
 		{
 			die("erro! mais de 1 chamada por data!");
 		}
         
-        
+				
 		return view("mobile/RealizarFrequencia",[
 			"idTurma" => $idTurma,
 			"alunos" => $alunos,
 			"data" => $data,
-			"turmas" => $turmas
+			"turmas" => $turmas,
+			"existe" => $existe
 		]);
     }
     
@@ -101,11 +103,11 @@ class FrequenciaController extends Controller
         //dd("fwut",$idTurma, $data, $chamadaExiste);
         //dd($chamadaExiste);
         $chamada = false;
-        
+        $existe = false;
         if(count($chamadaExiste) == 1)
         {
 			$chamada = $chamadaExiste[0];
-			
+			$existe = true;
 		}
 		else
 		{
@@ -146,11 +148,44 @@ class FrequenciaController extends Controller
 				$statusAluno->statusAluno = $status;
 				$statusAluno->save();
 			}
-
-			
 		}
 		
 		//return redirect("/mobile/frequencia");
-		return redirect()->route('frequencia.index',["idTurma" => $turma, "data" => $data]);
+		return redirect()->route('frequencia.index',["turma" => $turma, "data" => $data]);
+    }
+    
+    public function destroy(Request $request)
+    {
+		$data = $request->get("data");
+		$turma = $request->get("turma");
+		
+		 //checando se a turma atual já tem uma chamada realizada na data selecionada
+        $chamadaExiste = DB::table("chamada")
+        ->where("chamada.idTurma", "=", $turma)
+        ->whereDate('data',$data)
+        ->get();
+
+        if(count($chamadaExiste) == 1)
+        {
+			$idChamada = $chamadaExiste[0]->idChamada;
+			//caso a chamada exista, obtenha o statusAluno de todos os alunos da chamada atual, juntamente com a tabela aluno
+			$alunos = DB::table("status_aluno")
+			->where("status_aluno.idChamada", "=", $idChamada)
+			->join("aluno", "aluno.id", "=", "status_aluno.idAluno")
+			->get();
+			
+			//apague os status aluno			
+			//$statusAluno.update();
+			DB::table('status_aluno')
+			->where("status_aluno.idChamada", "=", $idChamada)
+			->delete();
+			
+			//após, apague a chamada
+			DB::table("chamada")
+				->where("chamada.idChamada", "=", $idChamada)
+				->delete();
+		}
+		
+		return redirect()->route('frequencia.index',["turma" => $turma, "data" => $data]);
     }
 }

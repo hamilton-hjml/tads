@@ -132,7 +132,21 @@ h5{
 
 #turma,#div_data,#alunos{
     padding-left: 20px; 
+    padding-right: 20px; 
 
+}
+
+/*layout selects, etc...*/
+.status_select{
+	float: right;
+	
+}
+
+/*layout selects, etc...*/
+.botao_direita{
+	padding-right: 20px; 
+	float: right;
+	
 }
 
 

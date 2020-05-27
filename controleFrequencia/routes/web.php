@@ -11,7 +11,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/mobile/home', 'mobile\HomeController@index')->name('mobile/home');
 Route::get('/mobile/login', 'mobile\MobileLoginController@index')->name('mobile/login');
-Route::get('/mobile/MenuPrincipal', 'mobile\MenuPrincipalController@index')->name('mobile/MenuPrincipal');
+//Route::get('/mobile/MenuPrincipal', 'mobile\MenuPrincipalController@index')->name('mobile/MenuPrincipal');
+
 
 
 /*
@@ -38,12 +39,26 @@ Route::group(['middleware' => 'role:professor'], function() {
 	
 	Route::resource('mobile/frequencia', 'mobile\FrequenciaController');
 	
+	//alteração de senha
+	Route::resource('mobile/privacidade', 'mobile\AlteraSenhaController');
+	Route::Get("/mobile/privacidade", [
+	"as" => "privacidade.index",
+	"uses" => "mobile\AlteraSenhaController@index"]);
+	
 	Route::Get("/mobile/frequencia", [
 	"as" => "frequencia.index",
 	"uses" => "mobile\FrequenciaController@index"]);
 	
+	//apagar frequencia
+	Route::Get("/mobile/apagarfrequencia", [
+	"as" => "frequencia.destroy",
+	"uses" => "mobile\FrequenciaController@destroy"]);
 	
-    });
+	Route::get("/mobile/menuPrincipal", function(){
+	return View::make("mobile.MenuPrincipal");
+	});
+	
+});
 
 Route::Get("/professor/{id}/delete", [
 	"as" => "professor.destroy",

@@ -32,16 +32,22 @@
 	<body>
 		<!-- Navegação -->
         <div class="topnav" id="myTopnav">
-			<a href="menuPrincipal.html">Menu Principal</a>
-			<a href="frequencia.html">Frequência</a>
-			<a href="privacidade.html">Privacidade</a>
+			<a href="menuPrincipal">Menu Principal</a>
+			<a href="frequencia">Frequência</a>
+			<a href="privacidade">Privacidade</a>
 
 			<a href="javascript:void(0);" class="icon" onclick="nav()">
 				<i class="fa fa-bars"></i>
 			</a>
 		</div>
 		
-		<h5> Realizar Frequência</h5>
+		<h5> 
+			@if ($existe)
+				Alterar Frequência
+			@else
+				Realizar Frequência
+			@endif
+		</h5>
 		
 		<br>
 		
@@ -72,10 +78,10 @@
 			<div id = "alunos">
 				@foreach ($alunos as $aluno)
 				<p>{{ $aluno->nome }}
-							<select name="alunos[{{$aluno->id}}]">		
+							<select name="alunos[{{$aluno->id}}]" class="status_select">		
 								@if (!empty($aluno->statusAluno))
 									@if ($aluno->statusAluno == "Presente")
-										<option value="Presente" selected="selected">Presente</option>
+										<option value="Presente" selected="selected" >Presente</option>
 									@else
 										<option value="Presente">Presente</option>
 									@endif	
@@ -97,14 +103,25 @@
 								<option value="Atestado">Atestado</option>
 								@endif
 							</select>
+							
 				</p>
 				@endforeach
+			
+			
 			
 				
 			<button class="btn btn-success botoes" type="submit">
 				<i class="fa fa-save"></i>
 				Salvar
 			</button>
+			@if ($existe)
+				
+				<a href="/mobile/apagarfrequencia?turma={{$idTurma}}&data={{$data}}" class="btn btn-danger botoes botao_direita">
+					<i class="fa fa-trash"></i>
+					Excluir
+				</a>
+			@endif
+			
 			</div>
 		</form>
 	

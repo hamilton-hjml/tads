@@ -17,10 +17,10 @@
 	</head>
     <body>
 	
-		<!-- Navegação -->
+		<!-- NavegaÃ§Ã£o -->
         <div class="topnav" id="myTopnav">
-			<a href="menuPrincipal.html">Menu Principal</a>
-			<a href="frequencia.html">Frequência</a>
+			<a href="menuPrincipal">Menu Principal</a>
+			<a href="frequencia">FrequÃªncia</a>
 			<a href="#" class="active">Privacidade</a>
 
 			<a href="javascript:void(0);" class="icon" onclick="nav()">
@@ -32,21 +32,24 @@
 		<div class="painel-login">
 			<h5>Alterar senha</h5>
 			<br>
-			<input type="text" class="form-login" placeholder="Senha atual">
-			<input type="password" class="form-login" placeholder="Nova senha">
-			
-			
-			<div>
-				<center>
-					<button class="btn btn-success" type="submit">Alterar Senha</button>
-				</center>
-			</div>
+			<form method="POST" action="/mobile/privacidade">
+			@csrf
+				<input id="senhaAntiga" name="senhaAntiga" type="password" class="form-login" placeholder="Senha atual">
+				<input id="senhaNova" name="senhaNova" type="password" class="form-login" placeholder="Nova senha">
+				
+				
+				<div>
+					<center>
+						<button class="btn btn-success" type="submit">Alterar Senha</button>
+					</center>
+				</div>
+			</form>
 		</div>  
 		
 		
 		<footer>
 			<div class="rodape">
-				<p>Controle de Frequência</p>
+				<p>Controle de FrequÃªncia</p>
 			</div>
 		</footer>
 		
