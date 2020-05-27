@@ -31,7 +31,7 @@ class Role
             // Redirect...
             if ($request->user()->role == 'professor')
             {
-				 return redirect('mobile/home');
+				 return redirect('mobile/menuPrincipal');
 			}
             
             return redirect('home');

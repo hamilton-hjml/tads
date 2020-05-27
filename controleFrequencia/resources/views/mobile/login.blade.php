@@ -18,7 +18,7 @@
     <body>
 	
 		<div class="topnav" id="myTopnav">	
-		<h5>SGF<h5>		
+		<h5>SGF<h5>	
 		
 			<a href="javascript:void(0);" class="icon" onclick="nav()">
 				<i class="fa fa-bars"></i>
@@ -31,12 +31,17 @@
 				<img src="img/logoSGF.png" height=130px;>
 			</div>
 			<br>
-			<input type="text" class="form-login" placeholder="CPF">
-			<input type="password" class="form-login" placeholder="Senha">
+			<form method="POST" action="/mobile/login">
+			@csrf
+			<input id="cpf" name="cpf" type="text" class="form-login" placeholder="CPF">
+			<input id="senha" name="senha" type="password" class="form-login" placeholder="Senha">
 			<div>
-				<button class="btn btn-success" type="submit" onclick="window.location.href = 'MenuPrincipal.html'";>Entrar</button>
-				<button class="btn btn-primary">Esqueci minha senha</button>
+				<button class="btn btn-success" type="submit">ENTRAR</button>
+				<a href="/password/reset" class="btn btn-primary">
+					ESQUECI A SENHA
+				</a>
 			</div>
+			</form>
 		</div>  
 		
 		

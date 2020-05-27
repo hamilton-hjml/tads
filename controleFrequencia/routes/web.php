@@ -7,12 +7,16 @@ Route::get('/', function () {
 Auth::routes();
 
 
-
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/mobile/home', 'mobile\HomeController@index')->name('mobile/home');
-Route::get('/mobile/login', 'mobile\MobileLoginController@index')->name('mobile/login');
+//Route::get('/mobile/login', 'mobile\MobileLoginController@index')->name('mobile/login');
 //Route::get('/mobile/MenuPrincipal', 'mobile\MenuPrincipalController@index')->name('mobile/MenuPrincipal');
 
+//mobile login
+Route::resource('mobile/login', 'mobile\MobileLoginController');
+Route::Get("/mobile/login", [
+"as" => "login.index",
+"uses" => "mobile\MobileLoginController@index"]);
 
 
 /*

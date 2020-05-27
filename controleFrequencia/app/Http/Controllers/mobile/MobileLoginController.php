@@ -4,86 +4,35 @@ namespace App\Http\Controllers\mobile;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-
-
+use Illuminate\Support\Facades\DB;
 
 class MobileLoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-	    return view('mobile/MobileLogin');
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+		return view("mobile/login");
+	}
+	
+	public function store(Request $request)
     {
-        //
-    }
+		
+		//obtendo email a partir do cpf
+		$email = DB::table("professor")
+			->where("professor.cpf", "=", $request->cpf)
+			->join("users", "users.id", "=", "professor.id")
+			->get()[0]->email;
+		
+		$credentials = ['email' => $email, 'password' => $request->senha];
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return redirect()->intended('mobile/menuPrincipal');
+        }
+	}
 }
+
+
+
