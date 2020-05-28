@@ -33,7 +33,7 @@
 		<!-- Navegação -->
         <div class="topnav" id="myTopnav">
 			<a href="menuPrincipal">Menu Principal</a>
-			<a href="frequencia">Frequência</a>
+			<a href="frequencia?">Frequência</a>
 			<a href="privacidade">Privacidade</a>
 
 			<a href="javascript:void(0);" class="icon" onclick="nav()">
