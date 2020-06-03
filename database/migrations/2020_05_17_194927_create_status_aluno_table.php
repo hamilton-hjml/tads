@@ -9,6 +9,8 @@ class CreateStatusAlunoTable extends Migration
 	public function up()
     {
         Schema::create('status_aluno', function (Blueprint $table) {		
+			$table->bigIncrements('id');
+			
 			$table->integer("idChamada")->unsigned();	
 			$table->foreign("idChamada")->references("idChamada")->on("chamada");
 			
