@@ -42,7 +42,9 @@
 
 @section("listagem")
 	<h4 style="font-family:Gill Sans; color:#228B22;">Listagem de frequências</h4>
-	<table class="table table-striped">
+	
+	<div style="overflow:auto">
+	<table style="white-space:nowrap;" class="table table-striped">
 		<colgroup>
 			<col width="400">
 			<col width="400">
@@ -52,12 +54,24 @@
 		<thead>
 			<tr>
 				<th>Aluno</th>
-				<th>Data 01</th>
-				<th>Data 02</th>
-				<th>Data 03</th>
+				@foreach ($datas as $data)
+						
+						<th style="padding-bottom: 12px;padding-top: 0.0px;padding-right: 0px;padding-left: 0px;"><input type="date" value="{{$data}}" readonly required="required"></th>
+						
+						
+				@endforeach
 			</tr>
 		</thead>
 		<tbody>
+			@foreach ($alunos as $nome => $statuses)
+				<tr>
+					<td>{{ $nome}}</td>
+					@foreach ($statuses as $status)
+					<td>{{ $status}}</td>
+					@endforeach
+				</tr>
+			@endforeach
+			<!--
 			@foreach ($relatorios as $relatorio)
 				<tr>
 					<td>{{ $relatorio->turma }}</td>
@@ -78,6 +92,8 @@
 					</td>
 				</tr>
 			@endforeach
+			-->
 		</tbody>
 	</table>
+	</div>
 @stop
