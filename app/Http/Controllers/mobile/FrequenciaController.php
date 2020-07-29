@@ -22,6 +22,16 @@ class FrequenciaController extends Controller
 		return $alunos;
 	}
 	
+	public function listaTurmas() {
+		$idProfessor = auth()->user()->id;
+		
+		$turmas = DB::table('turma')
+						//->select('turma.id', 'a.nome', 'a.matricula', 't.nome AS turma')
+						->where('turma.professor', '=', $idProfessor)
+						->get();
+		return $turmas;
+	}
+	
     public function index(Request $request)
     {
 		date_default_timezone_set('UTC');
@@ -30,7 +40,8 @@ class FrequenciaController extends Controller
 		{
 			$idTurma = $request->turma;
 		}
-        $turmas = Turma::All();
+        //$turmas = Turma::All();
+        $turmas = $this->listaTurmas();
         
         if($turmas->count() > 0)
         {

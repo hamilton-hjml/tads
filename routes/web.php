@@ -18,6 +18,12 @@ Route::Get("/mobile/login", [
 "as" => "login.index",
 "uses" => "mobile\MobileLoginController@index"]);
 
+//mobile logout
+//Route::resource('mobile/logout', 'mobile\MobileLoginController');
+Route::Get("/mobile/logout", [
+"as" => "mobile.logout",
+"uses" => "mobile\MobileLoginController@logout"]);
+
 
 /*
 Route::Resources([

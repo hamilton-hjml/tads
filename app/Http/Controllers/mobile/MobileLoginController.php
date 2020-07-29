@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Route;
+
 class MobileLoginController extends Controller
 {
     public function index()
@@ -29,8 +31,14 @@ class MobileLoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('mobile/menuPrincipal');
+            return redirect('mobile/menuPrincipal');
         }
+	}
+	
+	public function logout(Request $request)
+	{
+		Auth::logout();
+		return redirect('mobile/login');
 	}
 }
 
