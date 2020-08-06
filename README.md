@@ -1,6 +1,4 @@
 # tads
-Tópicos Avançados em Desenvolvimento de Software.
+Sistema desenvolvido para a disciplina de Tópicos Avançados em Desenvolvimento de Software.
 
-
-
-Controle de Frequência
+Sistema de Controle de Frequência Web e Mobile
